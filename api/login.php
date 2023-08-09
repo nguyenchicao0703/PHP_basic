@@ -6,6 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 include_once('../database/connection.php');
+include_once("./jwt.php");
 try {
     // đọc dữ liệu từ body request
     $data = json_decode(file_get_contents("php://input"));
@@ -27,10 +28,20 @@ try {
         if($password != $pwd) {
             throw new Exception("Mật khẩu không chính xác");
         } else {
+            //tạo token
+            $token= array(
+                "id"=> $user['id'],
+                "email"=> $user['email'],
+                "name"=> $user['name'],
+                "exp"=> (time()+ 60)
+            );
+            $headers = array('alg'=> 'HS256','type'=>'JWT');
+            $jwt= generate_jwt($headers,$token);
             echo json_encode(
                 array(
                     "status" => true,
-                    "message" => "Đăng nhập thành công"
+                    "message" => "Đăng nhập thành công",
+                    "token" => $jwt
                 )
             );
         }
@@ -43,4 +54,6 @@ try {
         )
     );
 }
-?>
+//jwt: json web token
+//access token: 1 ngày
+//refresh token : 7 days

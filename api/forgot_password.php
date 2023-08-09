@@ -32,7 +32,7 @@ try {
         );
     }
     // tạo token bằng md5
-    $token = md5($email, time());
+    $token = md5($email . time());
     // lưu token vào db
     $dbConn->query("INSERT INTO reset_password (email, token) VALUES ('$email', '$token')");
     // gửi email
@@ -42,13 +42,13 @@ try {
     $mail->CharSet = "utf-8";
     $mail->isSMTP();
     $mail->SMTPAuth = true;
-    $mail->Username = "xxxxxx";
-    $mail->Password = "xxxxxx";
+    $mail->Username = "chicao0703";
+    $mail->Password = "rwmhosyrwdfjutqy";
     $mail->SMTPSecure = "ssl";
     $mail->Host = "ssl://smtp.gmail.com";
     $mail->Port = "465";
-    $mail->From = "xxxxxxx@gmail.com";
-    $mail->FromName = "Nguyễn Anh Hùng";
+    $mail->From = "chicao0703@gmail.com";
+    $mail->FromName = "Jennie my love";
     $mail->addAddress($email, 'Hello');
     $mail->Subject = "Reset Password";
     $mail->isHTML(true);

@@ -1,5 +1,5 @@
 <?php
-// http://127.0.0.1:3456/reset_password.php?email=abc@gmail&token=123456
+// http://127.0.0.1:1234/web/reset_password.php?email=abc@gmail&token=123456
 include_once('../database/connection.php');
 try {
     if (isset($_POST['submit'])) {
@@ -15,7 +15,7 @@ try {
                     AND avaiable = 1
                     -- token chưa được sử dụng
                     -- token còn hiệu lục trong 1 giờ
-                    AND createdAt >= DATE_SUB(NOW(), INTERVAl 1 HOUR)";
+                    AND createAt >= DATE_SUB(NOW(), INTERVAl 1 HOUR)";
         $result = $dbConn->query($query);
         // nếu đã dùng thì không cho reset password
         if (!$result) {
@@ -42,9 +42,9 @@ try {
                     WHERE email = '$email'
                     AND token = '$token'
                     AND avaiable = 1
-                    -- token chưa được sử dụng
+                    -- token chưa được sử dụng  
                     -- token còn hiệu lục trong 1 giờ
-                    AND createdAt >= DATE_SUB(NOW(), INTERVAl 1 HOUR)";
+                    AND createAt >= DATE_SUB(NOW(), INTERVAl 1 HOUR)";
         $result = $dbConn->query($query);
         // nếu đã dùng thì không cho reset password
         if (!$result) {
@@ -70,16 +70,16 @@ try {
 <body>
     <div class="container mt-3">
         <h2>Đổi mật khẩu</h2>
-        <form action="" method="post">
+        <form action="reset_password.php" method="post">
             <div class="mb-3 mt-3">
                 <label for="password">Mật khẩu mới</label>
                 <input type="hidden" name="email" value="<?php echo $email; ?>">
                 <input type="hidden" name="token" value="<?php echo $token; ?>">
-                <input type="text" class="form-control" placeholder="Enter password" name="password">
+                <input type="password" class="form-control" placeholder="Enter password" name="password">
             </div>
             <div class="mb-3">
                 <label for="confirm_password">Nhập lại mật khẩu mới</label>
-                <input type="text" class="form-control" placeholder="Enter confirm password" name="confirm_password">
+                <input type="password" class="form-control" placeholder="Enter confirm password" name="confirm_password">
             </div>
             <button name="submit" type="submit" class="btn btn-primary">Đổi mật khẩu</button>
         </form>

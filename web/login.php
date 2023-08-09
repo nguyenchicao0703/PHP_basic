@@ -3,7 +3,7 @@ include_once("../database/connection.php");
 // start session, lưu trạng thái login
 session_start();
 // kiểm tra nếu đã đăng nhập thì chuyển đến trang index
-if(isset($_SESSION['email'])) {
+if (isset($_SESSION['email'])) {
     header("Location: index.php");
 }
 if (isset($_POST['submit'])) {
@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
         echo "Tài khoản không tồn tại";
         exit();
     } else {
-        
+
         // kiểm tra mật khẩu
         if ($user['password'] !== $pswd) {
             echo "Mật khẩu không chính xác";
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
                                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
                                 <label class="form-check-label" for="form1Example3"> Nhớ mật khẩu </label>
                             </div>
-                            <a href="#!">Quên mật khẩu?</a>
+                            <a href="./reset_password.php">Quên mật khẩu?</a>
                         </div>
 
                         <!-- Submit button -->
